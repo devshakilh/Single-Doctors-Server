@@ -87,6 +87,11 @@ async function run() {
             res.send(add);
 
         });
+        app.post('/add', async (req, res) => {
+            const add = req.body;
+            const result = await addCollection.insertOne(add);
+            res.send(result);
+        });
 
     }
     finally {
