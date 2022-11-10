@@ -92,7 +92,13 @@ async function run() {
             const result = await addCollection.insertOne(add);
             res.send(result);
         });
-
+        app.get('/add/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log(id, 'insert add get');
+            const query = { _id: ObjectId(id) };
+            const result = await addCollection.findOne(query);
+            res.send(result);
+        })
     }
     finally {
 
