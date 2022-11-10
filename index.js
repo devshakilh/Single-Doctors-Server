@@ -20,7 +20,7 @@ async function run() {
     try {
         const serviceCollection = client.db('doctor').collection('services');
         const reviewCollection = client.db('doctor').collection('review');
-
+        const addCollection = client.db('doctor').collection('add');
 
         app.get('/services', async (req, res) => {
             const query = {}
@@ -36,13 +36,14 @@ async function run() {
         })
         app.get('/services/:id', async (req, res) => {
             const id = req.params.id;
+            console.log(id, 'insert service')
             const query = { _id: ObjectId(id) }
             const service = await serviceCollection.findOne(query);
             res.send(service);
         })
         // review api 
         app.get('/review', async (req, res) => {
-
+            console.log(req.query.email);
             let query = {};
             if (req.query.email) {
                 query = {
@@ -59,7 +60,9 @@ async function run() {
             res.send(result);
         });
         app.get('/review/:id', async (req, res) => {
+
             const id = req.params.id;
+            console.log(id, 'insert review get');
             const query = { _id: ObjectId(id) };
             const result = await reviewCollection.deleteOne(query);
             res.send(result);
@@ -68,6 +71,32 @@ async function run() {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await reviewCollection.deleteOne(query);
+            res.send(result);
+        });
+        // service api 
+        app.get('/add', async (req, res) => {
+            console.log(req.query.email);
+            let query = {};
+            if (req.query.email) {
+                query = {
+                    email: req.query.email
+                }
+            }
+            const cursor = addCollection.find(query);
+            const add = await cursor.toArray();
+            res.send(add);
+
+        });
+        app.post('/add', async (req, res) => {
+            const add = req.body;
+            const result = await addCollection.insertOne(add);
+            res.send(result);
+        });
+        app.get('/add/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log(id, 'insert add get');
+            const query = { _id: ObjectId(id) };
+            const result = await addCollection.findOne(query);
             res.send(result);
         })
     }
