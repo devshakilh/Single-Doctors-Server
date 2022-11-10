@@ -22,12 +22,7 @@ async function run() {
         const reviewCollection = client.db('doctor').collection('review');
         const addCollection = client.db('doctor').collection('add');
 
-        app.get('/services', async (req, res) => {
-            const query = {}
-            const cursor = serviceCollection.find(query);
-            const services = await cursor.limit(3).toArray();
-            res.send(services);
-        })
+
         app.get('/servicess', async (req, res) => {
             const query = {}
             const cursor = serviceCollection.find(query);
