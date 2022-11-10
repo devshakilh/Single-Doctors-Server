@@ -73,32 +73,7 @@ async function run() {
             const result = await reviewCollection.deleteOne(query);
             res.send(result);
         });
-        // service api 
-        app.get('/add', async (req, res) => {
-            console.log(req.query.email);
-            let query = {};
-            if (req.query.email) {
-                query = {
-                    email: req.query.email
-                }
-            }
-            const cursor = addCollection.find(query);
-            const add = await cursor.toArray();
-            res.send(add);
 
-        });
-        app.post('/add', async (req, res) => {
-            const add = req.body;
-            const result = await addCollection.insertOne(add);
-            res.send(result);
-        });
-        app.get('/add/:id', async (req, res) => {
-            const id = req.params.id;
-            console.log(id, 'insert add get');
-            const query = { _id: ObjectId(id) };
-            const result = await addCollection.findOne(query);
-            res.send(result);
-        })
     }
     finally {
 
